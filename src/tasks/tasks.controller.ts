@@ -22,14 +22,8 @@ export class TasksController {
   }
 
   @Get(':id')
-  getTaskById(@Param('id') id: string): Task {
-    return {
-      id,
-      taskName: 'Task Name',
-      description: 'Task Description',
-      createdAt: moment().toISOString(),
-      updatedAt: moment().toISOString(),
-    };
+  async getTask(@Param('id') id: string): Promise<any> {
+    return await this.tasksService.getTask(id);
   }
 
   @Post()
