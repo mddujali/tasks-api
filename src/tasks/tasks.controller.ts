@@ -17,16 +17,8 @@ export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
 
   @Get()
-  getTasks(): Task[] {
-    return [
-      {
-        id: uuid(),
-        taskName: 'Task Name',
-        description: 'Task Description',
-        createdAt: moment().toISOString(),
-        updatedAt: moment().toISOString(),
-      },
-    ];
+  async getTasks(): Promise<Task[]> {
+    return await this.tasksService.getTasks();
   }
 
   @Get(':id')
