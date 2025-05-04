@@ -59,6 +59,15 @@ export class TasksService {
     return tasks[index];
   }
 
+  async deleteTask(id: string): Promise<void> {
+    const tasks: Task[] = await this.readFile();
+    const filteredTasks: Task[] = tasks.filter(
+      (task: Task): boolean => task.id !== id,
+    );
+
+    await this.writeFile(filteredTasks);
+  }
+
   private async readFile(): Promise<Task[]> {
     try {
       const data = await fs.readFile(filePath, 'utf-8');
