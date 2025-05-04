@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { promises as fs } from 'fs';
 const filePath = './data/tasks.json';
-import { Task } from './task.model';
+import { Task } from './task.interface';
 import { v4 as uuid } from 'uuid';
 import * as moment from 'moment';
 
