@@ -38,6 +38,27 @@ export class TasksService {
     return newTask;
   }
 
+  async updateTask(id: string, task: Partial<Task>): Promise<Task> {
+    const tasks: Task[] = await this.readFile();
+    const index: number = tasks.findIndex(
+      (task: Task): boolean => task.id === id,
+    );
+
+    if (index === -1) {
+      throw new NotFoundException();
+    }
+
+    tasks[index] = {
+      ...tasks[index],
+      ...task,
+      updatedAt: moment().toISOString(),
+    };
+
+    await this.writeFile(tasks);
+
+    return tasks[index];
+  }
+
   private async readFile(): Promise<Task[]> {
     try {
       const data = await fs.readFile(filePath, 'utf-8');
