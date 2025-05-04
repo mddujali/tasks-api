@@ -8,7 +8,6 @@ import {
   Put,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
-import { v4 as uuid } from 'uuid';
 import * as moment from 'moment';
 import { Task } from './task.model';
 
@@ -27,16 +26,8 @@ export class TasksController {
   }
 
   @Post()
-  createTask(@Body() task: Omit<Task, 'id'>): Task {
-    const { taskName, description } = task;
-
-    return {
-      id: uuid(),
-      taskName,
-      description,
-      createdAt: moment().toISOString(),
-      updatedAt: moment().toISOString(),
-    };
+  async createTask(@Body() task: Omit<Task, 'id'>): Promise<Task> {
+    return await this.tasksService.createTask(task);
   }
 
   @Put(':id')
